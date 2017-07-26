@@ -1,8 +1,9 @@
 // P�gina come�a sem todos
-var mainSection = $('#main');
-var footer = $('#footer');
-mainSection.hide();
-footer.hide();
+var secaoPrincipal = $('#main');
+var rodape = $('#rodape');
+var btnLimparCompletos = $('#clear-completed');
+secaoPrincipal.hide();
+btnLimparCompletos.hide();
 
 $(document).on('keyup', '#new-todo, .edit', function (e) {
     // Verifica se a tecla pressionada foi ENTER
@@ -23,13 +24,13 @@ function validaInput(nomeDoTodo, elementoDoInput) {
 }
 
 function criaTodo(nomeAtividadeNova) {
-    mainSection.show();
-    footer.show();
+    secaoPrincipal.show();
+    rodape.show();
     $('#todo-list').append("<li><div class='view'><input class='toggle' type='checkbox'><label class='campoTodo'>" + nomeAtividadeNova + "</label><button class='destroy'></button></div><input class='edit' value='Editando a ativadade'></li>");
-    atualizaQuantidadeDeItens();
+    attQuantidadeItens();
 }
 
-function atualizaQuantidadeDeItens() {
+function attQuantidadeItens() {
     var quantidade = $('#main > ul li').length - $('#main > ul li.completed').length;
     if (quantidade != 1) {
         //$('#todo-count').html("<strong> itens restantes</strong>");
@@ -37,6 +38,14 @@ function atualizaQuantidadeDeItens() {
        // $('#todo-count').text(" item restante");
     }
     $('#quantidade-itens').text(quantidade);
+}
+
+function attBtnLimparCompletos(){
+  if ($('#main > ul li.completed').length > 0) {
+    btnLimparCompletos.show();
+  } else {
+    btnLimparCompletos.hide();
+  }
 }
 
 function editaTodo(nomeNovoDaAtividade, campo) {
@@ -47,6 +56,7 @@ function editaTodo(nomeNovoDaAtividade, campo) {
 
 // Bot�o para marcar todos ou tirar a marca��o de todos
 $('#toggle-all').on('click', function (e) {
+    // Poderia usar o this ao invés do e.target também!!
     var marcado = $(e.target).prop('checked');
     $('#todo-list').find('.toggle').prop('checked', marcado);
 
@@ -64,7 +74,8 @@ $(document).on('dblclick', '.campoTodo', function (e) {
 // Aperta o bot�o de todo completo
 $(document).on('click', '.toggle', function () {
     $(this).parent().parent().toggleClass('completed');
-    atualizaQuantidadeDeItens();
+    attQuantidadeItens();
+    attBtnLimparCompletos();
 });
 
 // Aperta o bot�o de excluir o todo

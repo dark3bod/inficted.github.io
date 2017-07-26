@@ -1,4 +1,4 @@
-// Página começa sem todos
+// Pï¿½gina comeï¿½a sem todos
 var mainSection = $('#main');
 var footer = $('#footer');
 mainSection.hide();
@@ -9,6 +9,7 @@ $(document).on('keyup', '#new-todo, .edit', function (e) {
     if (e.keyCode == 13) {
         validaInput(e.target.value.trim(), this);
     }
+    // Verifica se a tecla pressionada durante a ediÃ§Ã£o foi o ESC
     else if (e.keyCode == 27 && $(this).hasClass('edit')) {
         $(this).parent().removeClass('editing');
     }
@@ -44,7 +45,7 @@ function editaTodo(nomeNovoDaAtividade, campo) {
     $(listItemPai).find('.campoTodo').text(nomeNovoDaAtividade);
 }
 
-// Botão para marcar todos ou tirar a marcação de todos
+// Botï¿½o para marcar todos ou tirar a marcaï¿½ï¿½o de todos
 $('#toggle-all').on('click', function (e) {
     var marcado = $(e.target).prop('checked');
     $('#todo-list').find('.toggle').prop('checked', marcado);
@@ -60,13 +61,13 @@ $(document).on('dblclick', '.campoTodo', function (e) {
     inputEdicao.focus();
 });
 
-// Aperta o botão de todo completo
+// Aperta o botï¿½o de todo completo
 $(document).on('click', '.toggle', function () {
     $(this).parent().parent().toggleClass('completed');
     atualizaQuantidadeDeItens();
 });
 
-// Aperta o botão de excluir o todo
+// Aperta o botï¿½o de excluir o todo
 $(document).on('click', '.destroy', function () {
     $(this).parent().parent().remove();
     atualizaQuantidadeDeItens();

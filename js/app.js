@@ -70,6 +70,11 @@ function getTodosCompletos(){
 function getAllTodos(){
   return $('#main > ul li');
 }
+
+function getTodosAtivos(){
+  return $('#main > ul li:not(.completed)');
+}
+
 // Bot�o para marcar todos ou tirar a marca��o de todos
 $('#toggle-all').on('click', function (e) {
     let arrTodosCompletos = getAllTodos();
@@ -115,4 +120,36 @@ $(document).on('click', '#clear-completed', function(){
   $(arrTodosCompletos).remove();
   $('#toggle-all').removeAttr('checked');
   btnLimparCompletos.hide();
+});
+
+$(document).on('click', '#show-only-completed', function(){
+  $('#filters').find('.selected').removeClass('selected');
+  $(this).addClass('selected');
+  let arrTodosAtivos = getTodosAtivos();
+  let arrTodosCompletos = getTodosCompletos();
+  $(arrTodosAtivos).hide();
+  $(arrTodosCompletos).show();
+  attBtnLimparCompletos();
+  campoToggleAll.prop('checked', 'false');
+});
+
+$(document).on('click', '#show-only-active', function(){
+  $('#filters').find('.selected').removeClass('selected');
+  $(this).addClass('selected');
+  let arrTodosAtivos = getTodosAtivos();
+  let arrTodosCompletos = getTodosCompletos();
+  $(arrTodosCompletos).hide();
+  $(arrTodosAtivos).show();
+  $('#toggle-all').removeAttr('checked');
+  btnLimparCompletos.hide();
+});
+
+$(document).on('click', '#show-all', function(){
+  $('#filters').find('.selected').removeClass('selected');
+  $(this).addClass('selected');
+  let arrTodosAtivos = getTodosAtivos();
+  let arrTodosCompletos = getTodosCompletos();
+  $(arrTodosCompletos).show();
+  $(arrTodosAtivos).show();
+  attBtnLimparCompletos();
 });

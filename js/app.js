@@ -1,6 +1,7 @@
 // P�gina come�a sem todos
 const secaoPrincipal = $('#main');
 const btnLimparCompletos = $('#clear-completed');
+const campoToggleAll = $('#toggle-all');
 secaoPrincipal.hide();
 btnLimparCompletos.hide();
 
@@ -49,7 +50,6 @@ function attBtnLimparCompletos(){
 function attBtnToggleAllCompleted(){
   let quantidadeTodosCompletos = getTodosCompletos().length;
   let quantidadetTotalTodos = getAllTodos().length;
-  let campoToggleAll = $('#toggle-all');
   if (quantidadetTotalTodos == quantidadeTodosCompletos && quantidadeTodosCompletos > 0){
     campoToggleAll.prop('checked', 'false');
   } else {
@@ -122,34 +122,27 @@ $(document).on('click', '#clear-completed', function(){
   btnLimparCompletos.hide();
 });
 
-$(document).on('click', '#show-only-completed', function(){
+$(document).on('click', '#show-all, #show-only-completed, #show-only-active', function(){
   $('#filters').find('.selected').removeClass('selected');
   $(this).addClass('selected');
   let arrTodosAtivos = getTodosAtivos();
   let arrTodosCompletos = getTodosCompletos();
-  $(arrTodosAtivos).hide();
-  $(arrTodosCompletos).show();
-  attBtnLimparCompletos();
-  campoToggleAll.prop('checked', 'false');
-});
 
-$(document).on('click', '#show-only-active', function(){
-  $('#filters').find('.selected').removeClass('selected');
-  $(this).addClass('selected');
-  let arrTodosAtivos = getTodosAtivos();
-  let arrTodosCompletos = getTodosCompletos();
-  $(arrTodosCompletos).hide();
-  $(arrTodosAtivos).show();
-  $('#toggle-all').removeAttr('checked');
-  btnLimparCompletos.hide();
-});
-
-$(document).on('click', '#show-all', function(){
-  $('#filters').find('.selected').removeClass('selected');
-  $(this).addClass('selected');
-  let arrTodosAtivos = getTodosAtivos();
-  let arrTodosCompletos = getTodosCompletos();
-  $(arrTodosCompletos).show();
-  $(arrTodosAtivos).show();
-  attBtnLimparCompletos();
+  if ( $(this).is('#show-all')) {
+    $(arrTodosCompletos).show();
+    $(arrTodosAtivos).show();
+    attBtnLimparCompletos();
+  }
+  else if ($(this).is('#show-only-completed')){
+    $(arrTodosAtivos).hide();
+    $(arrTodosCompletos).show();
+    attBtnLimparCompletos();
+    campoToggleAll.prop('checked', 'false');
+  }
+  else {
+    $(arrTodosCompletos).hide();
+    $(arrTodosAtivos).show();
+    btnLimparCompletos.hide();
+    campoToggleAll.removeAttr('checked');
+  }
 });

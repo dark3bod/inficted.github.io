@@ -30,12 +30,12 @@ function criaTodo(nomeAtividadeNova) {
 
 function attQuantidadeItens() {
     let quantidade = getAllTodos().length - getTodosCompletos().length;
+    let areaItensRestantes = $('#todo-count');
     if (quantidade != 1) {
-        //$('#todo-count').html("<strong> itens restantes</strong>");
+      areaItensRestantes.empty().html("<b>" + quantidade + "</b> itens restantes");
     } else {
-       // $('#todo-count').text(" item restante");
+       areaItensRestantes.empty().html("<b>" + quantidade + "</b> item restante");
     }
-    $('#quantidade-itens').text(quantidade);
 }
 
 function attBtnLimparCompletos(){
@@ -70,8 +70,6 @@ function getTodosCompletos(){
 function getAllTodos(){
   return $('#main > ul li');
 }
-
-
 // Bot�o para marcar todos ou tirar a marca��o de todos
 $('#toggle-all').on('click', function (e) {
     let arrTodosCompletos = getAllTodos();
@@ -117,4 +115,4 @@ $(document).on('click', '#clear-completed', function(){
   $(arrTodosCompletos).remove();
   $('#toggle-all').removeAttr('checked');
   btnLimparCompletos.hide();
-})
+});

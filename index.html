@@ -45,17 +45,17 @@
 			<!-- This footer should hidden by default and shown when there are todos -->
 			<footer id="footer">
 				<!-- This should be `0 items left` by default -->
-				<span id="todo-count"><strong id="quantidade-itens">0</strong> itens restantes</span>
+				<span id="todo-count"><b>0</b> itens restantes</span>
 				<!-- Remove this if you don't implement routing -->
 				<ul id="filters">
 					<li>
-						<a class="selected" href="#/">Todos</a>
+						<a class="selected" href="#/" id="show-all">Todos</a>
 					</li>
 					<li>
-						<a href="#/active">Ativos</a>
+						<a href="#/active" id="show-only-active">Ativos</a>
 					</li>
 					<li>
-						<a href="#/completed">Completos</a>
+						<a href="#/completed" id="show-only-completed">Completos</a>
 					</li>
 				</ul>
 				<!-- Hidden if no completed items are left ↓ -->

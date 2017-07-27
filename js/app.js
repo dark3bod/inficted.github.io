@@ -31,7 +31,7 @@ function criaTodo(nomeAtividadeNova) {
 }
 
 function attQuantidadeItens() {
-    var quantidade = $('#main > ul li').length - $('#main > ul li.completed').length;
+    let quantidade = getAllTodos().length - getTodosCompletos().length;
     if (quantidade != 1) {
         //$('#todo-count').html("<strong> itens restantes</strong>");
     } else {
@@ -49,23 +49,40 @@ function attBtnLimparCompletos(){
 }
 
 function editaTodo(nomeNovoDaAtividade, campo) {
-    var listItemPai = $(campo).parent();
+    let listItemPai = $(campo).parent();
     $(listItemPai).removeClass('editing');
     $(listItemPai).find('.campoTodo').text(nomeNovoDaAtividade);
 }
 
+function getTodosCompletos(){
+  return $('#main > ul li.completed');
+}
+
+function getAllTodos(){
+  return $('#main > ul li');
+}
+
 // Bot�o para marcar todos ou tirar a marca��o de todos
 $('#toggle-all').on('click', function (e) {
+    let arrTodosCompletos = getAllTodos();
+    let camposSelecionaveis = $('#todo-list').find('.toggle');
     // Poderia usar o this ao invés do e.target também!!
-    var marcado = $(e.target).prop('checked');
-    $('#todo-list').find('.toggle').prop('checked', marcado);
+    if($(e.target).is(':checked')){
+      camposSelecionaveis.prop('checked', 'false');
+      $(arrTodosCompletos).addClass('completed');
+    } else {
+      camposSelecionaveis.removeAttr('checked');
+      $(arrTodosCompletos).removeClass('completed');
+    }
 
+    attQuantidadeItens();
+    attBtnLimparCompletos();
 });
 
 // Double click para editar o todo
 $(document).on('dblclick', '.campoTodo', function (e) {
-    var listItemPai = $(this).parent().parent();
-    var inputEdicao = listItemPai.children('.edit');
+    let listItemPai = $(this).parent().parent();
+    let inputEdicao = listItemPai.children('.edit');
     listItemPai.addClass('editing');
     inputEdicao.val(this.innerText);
     inputEdicao.focus();
@@ -81,5 +98,11 @@ $(document).on('click', '.toggle', function () {
 // Aperta o bot�o de excluir o todo
 $(document).on('click', '.destroy', function () {
     $(this).parent().parent().remove();
-    atualizaQuantidadeDeItens();
+    attQuantidadeItens();
 });
+
+$(document).on('click', '#clear-completed', function(){
+  let arrTodosCompletos = getTodosCompletos();
+  $(arrTodosCompletos).remove();
+  btnLimparCompletos.hide();
+})

@@ -1,7 +1,6 @@
 // P�gina come�a sem todos
-var secaoPrincipal = $('#main');
-var rodape = $('#rodape');
-var btnLimparCompletos = $('#clear-completed');
+const secaoPrincipal = $('#main');
+const btnLimparCompletos = $('#clear-completed');
 secaoPrincipal.hide();
 btnLimparCompletos.hide();
 
@@ -25,7 +24,6 @@ function validaInput(nomeDoTodo, elementoDoInput) {
 
 function criaTodo(nomeAtividadeNova) {
     secaoPrincipal.show();
-    rodape.show();
     $('#todo-list').append("<li><div class='view'><input class='toggle' type='checkbox'><label class='campoTodo'>" + nomeAtividadeNova + "</label><button class='destroy'></button></div><input class='edit' value='Editando a ativadade'></li>");
     attQuantidadeItens();
 }
@@ -48,6 +46,17 @@ function attBtnLimparCompletos(){
   }
 }
 
+function attBtnToggleAllCompleted(){
+  let quantidadeTodosCompletos = getTodosCompletos().length;
+  let quantidadetTotalTodos = getAllTodos().length;
+  let campoToggleAll = $('#toggle-all');
+  if (quantidadetTotalTodos == quantidadeTodosCompletos && quantidadeTodosCompletos > 0){
+    campoToggleAll.prop('checked', 'false');
+  } else {
+    campoToggleAll.removeAttr('checked');
+  }
+}
+
 function editaTodo(nomeNovoDaAtividade, campo) {
     let listItemPai = $(campo).parent();
     $(listItemPai).removeClass('editing');
@@ -62,6 +71,7 @@ function getAllTodos(){
   return $('#main > ul li');
 }
 
+
 // Bot�o para marcar todos ou tirar a marca��o de todos
 $('#toggle-all').on('click', function (e) {
     let arrTodosCompletos = getAllTodos();
@@ -74,7 +84,6 @@ $('#toggle-all').on('click', function (e) {
       camposSelecionaveis.removeAttr('checked');
       $(arrTodosCompletos).removeClass('completed');
     }
-
     attQuantidadeItens();
     attBtnLimparCompletos();
 });
@@ -93,6 +102,7 @@ $(document).on('click', '.toggle', function () {
     $(this).parent().parent().toggleClass('completed');
     attQuantidadeItens();
     attBtnLimparCompletos();
+    attBtnToggleAllCompleted();
 });
 
 // Aperta o bot�o de excluir o todo
@@ -101,8 +111,10 @@ $(document).on('click', '.destroy', function () {
     attQuantidadeItens();
 });
 
+// Aperta o botão de excluir os todos completos
 $(document).on('click', '#clear-completed', function(){
   let arrTodosCompletos = getTodosCompletos();
   $(arrTodosCompletos).remove();
+  $('#toggle-all').removeAttr('checked');
   btnLimparCompletos.hide();
 })

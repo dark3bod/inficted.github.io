@@ -24,8 +24,9 @@ function validaInput(nomeDoTodo, elementoDoInput) {
 }
 
 function criaTodo(nomeAtividadeNova) {
-    secaoPrincipal.show();
-    $('#todo-list').append("<li><div class='view'><input class='toggle' type='checkbox'><label class='campoTodo'>" + nomeAtividadeNova + "</label><button class='destroy'></button></div><input class='edit' value='Editando a ativadade'></li>");
+    secaoPrincipal.fadeIn(700);
+    $("<li><div class='view'><input class='toggle' type='checkbox'><label class='campoTodo'>" + nomeAtividadeNova + "</label><button class='destroy'></button></div><input class='edit' value='Editando a ativadade'></li>").hide().appendTo('#todo-list').slideDown(250);
+
     attQuantidadeItens();
 }
 
@@ -41,9 +42,9 @@ function attQuantidadeItens() {
 
 function attBtnLimparCompletos(){
   if ($('#main > ul li.completed').length > 0) {
-    btnLimparCompletos.show();
+    btnLimparCompletos.fadeIn(500);
   } else {
-    btnLimparCompletos.hide();
+    btnLimparCompletos.fadeOut(500);
   }
 }
 
@@ -110,14 +111,14 @@ $(document).on('click', '.toggle', function () {
 
 // Aperta o bot�o de excluir o todo
 $(document).on('click', '.destroy', function () {
-    $(this).parent().parent().remove();
+    $(this).parent().parent().slideUp(350);
     attQuantidadeItens();
 });
 
 // Aperta o botão de excluir os todos completos
 $(document).on('click', '#clear-completed', function(){
   let arrTodosCompletos = getTodosCompletos();
-  $(arrTodosCompletos).remove();
+  $(arrTodosCompletos).slideUp(350);
   $('#toggle-all').removeAttr('checked');
   btnLimparCompletos.hide();
 });
@@ -129,20 +130,21 @@ $(document).on('click', '#show-all, #show-only-completed, #show-only-active', fu
   let arrTodosCompletos = getTodosCompletos();
 
   if ( $(this).is('#show-all')) {
-    $(arrTodosCompletos).show();
-    $(arrTodosAtivos).show();
+    $(arrTodosCompletos).slideDown(400);
+    $(arrTodosAtivos).slideDown(400);
+    attBtnToggleAllCompleted();
     attBtnLimparCompletos();
   }
   else if ($(this).is('#show-only-completed')){
-    $(arrTodosAtivos).hide();
-    $(arrTodosCompletos).show();
+    $(arrTodosAtivos).slideUp(350);
+    $(arrTodosCompletos).slideDown(400);
     attBtnLimparCompletos();
-    campoToggleAll.prop('checked', 'false');
+    campoToggleAll.prop('checked', 'true');
   }
   else {
-    $(arrTodosCompletos).hide();
-    $(arrTodosAtivos).show();
-    btnLimparCompletos.hide();
+    $(arrTodosCompletos).slideUp(350);
+    $(arrTodosAtivos).slideDown(400);
+    btnLimparCompletos.fadeOut(500);
     campoToggleAll.removeAttr('checked');
   }
 });

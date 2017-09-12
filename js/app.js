@@ -39,9 +39,9 @@ function attQuantidadeItens() {
     let quantidade = getAllTodos().length - getTodosCompletos().length;
     let areaItensRestantes = $('#todo-count');
     if (quantidade != 1) {
-      areaItensRestantes.empty().html("<b>" + quantidade + "</b> itens restantes");
+      areaItensRestantes.empty().html("<b>" + quantidade + "</b> items left");
     } else {
-       areaItensRestantes.empty().html("<b>" + quantidade + "</b> item restante");
+       areaItensRestantes.empty().html("<b>" + quantidade + "</b> item left");
     }
 }
 

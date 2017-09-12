@@ -25,7 +25,12 @@ function validaInput(nomeDoTodo, elementoDoInput) {
 
 function criaTodo(nomeAtividadeNova) {
     secaoPrincipal.fadeIn(700);
-    $("<li><div class='view'><input class='toggle' type='checkbox'><label class='campoTodo'>" + nomeAtividadeNova + "</label><button class='destroy'></button></div><input class='edit' value='Editando a ativadade'></li>").hide().appendTo('#todo-list').slideDown(250);
+    $("<li><div class='view'><input class='toggle' type='checkbox'><label class='campoTodo'>" 
+      + nomeAtividadeNova 
+      + "</label><button class='destroy'></button></div><input class='edit' value='Editando a ativadade'></li>")
+      .hide()
+      .appendTo('#todo-list')
+      .slideDown(250);
 
     attQuantidadeItens();
 }
@@ -111,8 +116,11 @@ $(document).on('click', '.toggle', function () {
 
 // Aperta o bot�o de excluir o todo
 $(document).on('click', '.destroy', function () {
-    $(this).parent().parent().slideUp(350);
-    attQuantidadeItens();
+    var todo = $(this).parent().parent();
+    $(todo).slideUp( 350, function() {
+      $(todo).remove();
+      attQuantidadeItens();
+    });
 });
 
 // Aperta o botão de excluir os todos completos

@@ -125,6 +125,7 @@ $(document).on('click', '.destroy', function () {
     $(todo).slideUp( 350, function() {
       $(todo).remove();
       attQuantidadeItens();
+      attBtnLimparCompletos();
     });
 });
 

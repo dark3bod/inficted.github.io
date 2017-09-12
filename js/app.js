@@ -2,8 +2,10 @@
 const secaoPrincipal = $('#main');
 const btnLimparCompletos = $('#clear-completed');
 const campoToggleAll = $('#toggle-all');
+const status = $('.status');
 secaoPrincipal.hide();
 btnLimparCompletos.hide();
+status.hide();
 
 $(document).on('keyup', '#new-todo, .edit', function (e) {
     // Verifica se a tecla pressionada foi ENTER
@@ -43,6 +45,9 @@ function attQuantidadeItens() {
     } else {
        areaItensRestantes.empty().html("<b>" + quantidade + "</b> item left");
     }
+    status.fadeIn( 150, function() {
+      status.delay(3000).fadeOut();
+    });
 }
 
 function attBtnLimparCompletos(){

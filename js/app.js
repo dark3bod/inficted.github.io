@@ -116,7 +116,7 @@ $(document).on('click', '.toggle', function () {
 
 // Aperta o bot�o de excluir o todo
 $(document).on('click', '.destroy', function () {
-    var todo = $(this).parent().parent();
+    let todo = $(this).parent().parent();
     $(todo).slideUp( 350, function() {
       $(todo).remove();
       attQuantidadeItens();
@@ -126,7 +126,11 @@ $(document).on('click', '.destroy', function () {
 // Aperta o botão de excluir os todos completos
 $(document).on('click', '#clear-completed', function(){
   let arrTodosCompletos = getTodosCompletos();
-  $(arrTodosCompletos).slideUp(350);
+  $(arrTodosCompletos).slideUp( 350, function() {
+      $(arrTodosCompletos).remove();
+      attQuantidadeItens();
+    });
+
   $('#toggle-all').removeAttr('checked');
   btnLimparCompletos.hide();
 });

@@ -61,11 +61,8 @@ function attBtnLimparCompletos(){
 function attBtnToggleAllCompleted(){
   let quantidadeTodosCompletos = getTodosCompletos().length;
   let quantidadetTotalTodos = getAllTodos().length;
-  if (quantidadetTotalTodos == quantidadeTodosCompletos && quantidadeTodosCompletos > 0){
-    campoToggleAll.prop('checked', 'false');
-  } else {
-    campoToggleAll.removeAttr('checked');
-  }
+  let show_btn = quantidadetTotalTodos == quantidadeTodosCompletos && quantidadeTodosCompletos > 0
+  campoToggleAll.prop('checked', show_btn);
 }
 
 function editaTodo(nomeNovoDaAtividade, campo) {
@@ -121,13 +118,16 @@ $(document).on('click', '.toggle', function () {
 
 // Aperta o bot�o de excluir o todo
 $(document).on('click', '.destroy', function () {
-    let todo = $(this).parent().parent();
-    $(todo).slideUp( 350, function() {
-      $(todo).remove();
-      attQuantidadeItens();
-      attBtnLimparCompletos();
-    });
+  let todo = $(this).parent().parent();
+  removeTodo(todo);
 });
+
+function removeTodo(element) {
+  $(element).remove();
+  attQuantidadeItens();
+  attBtnLimparCompletos();
+  attBtnToggleAllCompleted();
+}
 
 // Aperta o botão de excluir os todos completos
 $(document).on('click', '#clear-completed', function(){
@@ -137,7 +137,7 @@ $(document).on('click', '#clear-completed', function(){
       attQuantidadeItens();
     });
 
-  $('#toggle-all').removeAttr('checked');
+  attBtnToggleAllCompleted();
   btnLimparCompletos.hide();
 });
 
